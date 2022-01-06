@@ -43,7 +43,7 @@ public class Perlin : MonoBehaviour
         }
     }
     
-    private void ApplyOnTilemap(Tilemap tilemap, int actualSeed, TileBase tileBase1)
+    private void ApplyOnTilemap(Tilemap tilemap, int actualSeed, TileBase tileBase)
     {
         tilemap.ClearAllTiles();
 
@@ -52,7 +52,7 @@ public class Perlin : MonoBehaviour
             for (var j = 0; j < height; j++)
             {
                 if(Mathf.PerlinNoise(actualSeed + i * zoom, actualSeed + j * zoom) > threshold) 
-                    tilemap.SetTile(new Vector3Int(i, j, 0), tileBase1);
+                    tilemap.SetTile(new Vector3Int(i, j, 0), tileBase);
             }
         }
     }
