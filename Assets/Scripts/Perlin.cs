@@ -37,6 +37,7 @@ public class Perlin : MonoBehaviour
         var random = new Random();
         seedGround = random.Next() / Div;
         seedTrees = random.Next() / Div;
+        seedSpikes = random.Next() / Div;
     }
 
     private void Update()
