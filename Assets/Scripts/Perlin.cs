@@ -4,8 +4,9 @@ using Random = System.Random;
 
 public class Perlin : MonoBehaviour
 {
-    [SerializeField] private int width, height;
-
+    [Header("Settings")] 
+    [SerializeField] private int width;
+    [SerializeField] private int height;
     [SerializeField] private float zoom;
     
     [Header("TileBase")] 
@@ -13,32 +14,34 @@ public class Perlin : MonoBehaviour
     [SerializeField] private TileBase grass1;
     [SerializeField] private TileBase tree;
 
-    [Header("Seeds")] 
-    [SerializeField] private int defaultSeed;
+    [Header("Seeds")]
     [SerializeField] private int seedGround;
     [SerializeField] private int seedTrees;
     
     [Header("Thresholds")] 
-    [Range(0, 1)] [SerializeField] private float threshold;
+    [Range(0, 1)] [SerializeField] private float groundThreshold;
+    [Range(0, 1)] [SerializeField] private float treesThreshold;
     
     [Header("Tilemaps")] 
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private Tilemap treesTilemap;
 
+    private const int Div = 1000000;
+
     private void Start()
     {
-        var random = new Random(defaultSeed);
-        seedGround = random.Next() / 1000000;
-        seedTrees = random.Next() / 1000000;
+        var random = new Random();
+        seedGround = random.Next() / Div;
+        seedTrees = random.Next() / Div;
     }
 
     private void Update()
     {
-        ApplyOnTilemap(groundTilemap, seedGround, grass, grass1);
-        ApplyOnTilemap(treesTilemap, seedTrees, tree);
+        ApplyOnTilemap(groundTilemap, seedGround, groundThreshold, grass, grass1);
+        ApplyOnTilemap(treesTilemap, seedTrees, treesThreshold, tree);
     }
 
-    private void ApplyOnTilemap(Tilemap tilemap, int seed, TileBase tileBase1, TileBase tileBase2)
+    private void ApplyOnTilemap(Tilemap tilemap, int seed, float threshold, TileBase tileBase1, TileBase tileBase2)
     {
         tilemap.ClearAllTiles();
 
@@ -52,7 +55,7 @@ public class Perlin : MonoBehaviour
         }
     }
     
-    private void ApplyOnTilemap(Tilemap tilemap, int seed, TileBase tileBase)
+    private void ApplyOnTilemap(Tilemap tilemap, int seed, float threshold, TileBase tileBase)
     {
         tilemap.ClearAllTiles();
 

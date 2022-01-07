@@ -565,6 +565,7 @@ MonoBehaviour:
   defaultSeed: 0
   seedGround: 0
   seedTrees: 0
-  threshold: 0.6
+  groundThreshold: 0.6
+  treesThreshold: 0.8
   groundTilemap: {fileID: 621984136}
   treesTilemap: {fileID: 639137419}
