@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 639137419}
   - component: {fileID: 639137420}
   m_Layer: 0
-  m_Name: GrassTilemap
+  m_Name: TreesTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,15 +556,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9c3eae6025c4d40bfc727535f8a4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  black: {fileID: 11400000, guid: 4c85e76db68c40340bffdd20cc3c6575, type: 2}
-  white: {fileID: 11400000, guid: c10a2a4adbbbc4c41a171f22005422af, type: 2}
-  green: {fileID: 11400000, guid: 72e9df5766fc84c4c9023e9efb4c3525, type: 2}
-  seed: 29
-  seedGround: 0
-  seedGrass: 0
   width: 64
   height: 64
   zoom: 0.06
+  grass: {fileID: 11400000, guid: 7df9c4810dc159d4d9e8eab214c4241c, type: 2}
+  grass1: {fileID: 11400000, guid: 08b6fd076049c8242bfed8e76f024a9a, type: 2}
+  tree: {fileID: 11400000, guid: ccb200500c3d0c149a66ad88b40c2092, type: 2}
+  defaultSeed: 0
+  seedGround: 0
+  seedTrees: 0
   threshold: 0.6
   groundTilemap: {fileID: 621984136}
-  grassTilemap: {fileID: 639137419}
+  treesTilemap: {fileID: 639137419}

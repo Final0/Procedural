@@ -4,32 +4,41 @@ using Random = System.Random;
 
 public class Perlin : MonoBehaviour
 {
-    [SerializeField] private TileBase black, white, green;
-
-    [SerializeField] private int seed, seedGround, seedGrass;
     [SerializeField] private int width, height;
 
     [SerializeField] private float zoom;
+    
+    [Header("TileBase")] 
+    [SerializeField] private TileBase grass;
+    [SerializeField] private TileBase grass1;
+    [SerializeField] private TileBase tree;
 
+    [Header("Seeds")] 
+    [SerializeField] private int defaultSeed;
+    [SerializeField] private int seedGround;
+    [SerializeField] private int seedTrees;
+    
+    [Header("Thresholds")] 
     [Range(0, 1)] [SerializeField] private float threshold;
     
+    [Header("Tilemaps")] 
     [SerializeField] private Tilemap groundTilemap;
-    [SerializeField] private Tilemap grassTilemap;
+    [SerializeField] private Tilemap treesTilemap;
 
     private void Start()
     {
-        var random = new Random(seed);
+        var random = new Random(defaultSeed);
         seedGround = random.Next() / 1000000;
-        seedGrass = random.Next() / 1000000;
+        seedTrees = random.Next() / 1000000;
     }
 
     private void Update()
     {
-        ApplyOnTilemap(groundTilemap, seedGround, black, white);
-        ApplyOnTilemap(grassTilemap, seedGrass, green);
+        ApplyOnTilemap(groundTilemap, seedGround, grass, grass1);
+        ApplyOnTilemap(treesTilemap, seedTrees, tree);
     }
 
-    private void ApplyOnTilemap(Tilemap tilemap, int actualSeed, TileBase tileBase1, TileBase tileBase2)
+    private void ApplyOnTilemap(Tilemap tilemap, int seed, TileBase tileBase1, TileBase tileBase2)
     {
         tilemap.ClearAllTiles();
 
@@ -38,12 +47,12 @@ public class Perlin : MonoBehaviour
             for (var j = 0; j < height; j++)
             {
                 tilemap.SetTile(new Vector3Int(i, j, 0),
-                    Mathf.PerlinNoise(actualSeed + i * zoom, actualSeed + j * zoom) > threshold ? tileBase1 : tileBase2);
+                    Mathf.PerlinNoise(seed + i * zoom, seed + j * zoom) > threshold ? tileBase1 : tileBase2);
             }
         }
     }
     
-    private void ApplyOnTilemap(Tilemap tilemap, int actualSeed, TileBase tileBase)
+    private void ApplyOnTilemap(Tilemap tilemap, int seed, TileBase tileBase)
     {
         tilemap.ClearAllTiles();
 
@@ -51,7 +60,7 @@ public class Perlin : MonoBehaviour
         {
             for (var j = 0; j < height; j++)
             {
-                if(Mathf.PerlinNoise(actualSeed + i * zoom, actualSeed + j * zoom) > threshold) 
+                if(Mathf.PerlinNoise(seed + i * zoom, seed + j * zoom) > threshold) 
                     tilemap.SetTile(new Vector3Int(i, j, 0), tileBase);
             }
         }
