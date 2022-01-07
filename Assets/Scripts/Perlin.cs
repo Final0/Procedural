@@ -13,18 +13,22 @@ public class Perlin : MonoBehaviour
     [SerializeField] private TileBase grass;
     [SerializeField] private TileBase grass1;
     [SerializeField] private TileBase tree;
+    [SerializeField] private TileBase spike;
 
     [Header("Seeds")]
     [SerializeField] private int seedGround;
     [SerializeField] private int seedTrees;
+    [SerializeField] private int seedSpikes;
     
     [Header("Thresholds")] 
     [Range(0, 1)] [SerializeField] private float groundThreshold;
     [Range(0, 1)] [SerializeField] private float treesThreshold;
+    [Range(0, 1)] [SerializeField] private float spikesThreshold;
     
     [Header("Tilemaps")] 
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private Tilemap treesTilemap;
+    [SerializeField] private Tilemap spikesTilemap;
 
     private const int Div = 1000000;
 
@@ -39,6 +43,7 @@ public class Perlin : MonoBehaviour
     {
         ApplyOnTilemap(groundTilemap, seedGround, groundThreshold, grass, grass1);
         ApplyOnTilemap(treesTilemap, seedTrees, treesThreshold, tree);
+        ApplyOnTilemap(spikesTilemap, seedSpikes, spikesThreshold, spike);
     }
 
     private void ApplyOnTilemap(Tilemap tilemap, int seed, float threshold, TileBase tileBase1, TileBase tileBase2)
