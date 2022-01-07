@@ -409,3 +409,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8338dcb55d82d444d895f97f622be79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 4
+  height: 4
+  spaceBetweenCells: 1
+  alive: {fileID: 11400000, guid: 5b1d4602cf6c6924a9f26c4e27ac92d5, type: 2}
+  born: {fileID: 11400000, guid: 199acd343f9f72947bd9570d682c7595, type: 2}
+  dead: {fileID: 11400000, guid: ca2eb08a5f11029419e6d604402fc18c, type: 2}
+  oneGen: {fileID: 11400000, guid: 1efa4be7afba0564ba45d4dfa6779be7, type: 2}
+  empty: {fileID: 11400000, guid: 2a742559e836a3a45a02da5c03f224a0, type: 2}
