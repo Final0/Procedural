@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,11 +14,25 @@ public class Gol : MonoBehaviour
     [SerializeField] private TileBase oneGen;
     [SerializeField] private TileBase empty;
     
+    [SerializeField] private TMP_Text generationText;
+    
     private Tilemap tilemap;
 
-    private int[,] array2D = new int[6, 6];
+    private readonly int[,] array2D = new int[20, 20];
     
     private int width, height;
+
+    private int currentGen;
+    private int CurrentGen
+    {
+        get => currentGen;
+        set
+        {
+            currentGen = value;
+
+            generationText.text = "Generation " + currentGen;
+        }
+    }
 
     private void Awake()
     {
@@ -30,8 +45,10 @@ public class Gol : MonoBehaviour
         InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
     }
 
-    private void InitializeCells()
+    public void InitializeCells()
     {
+        CurrentGen = 0;
+        
         for (var i = 0; i < width; i++)
         {
             for (var j = 0; j < height; j++)
@@ -39,17 +56,12 @@ public class Gol : MonoBehaviour
                 tilemap.SetTile(new Vector3Int(i, j, 0), empty);
             }
         }
-        
-        tilemap.SetTile(new Vector3Int(1, 2, 0), alive);
-        tilemap.SetTile(new Vector3Int(1, 3, 0), alive);
-        tilemap.SetTile(new Vector3Int(2, 1, 0), alive);
-        tilemap.SetTile(new Vector3Int(4, 2, 0), alive);
-        tilemap.SetTile(new Vector3Int(4, 3, 0), alive);
-        tilemap.SetTile(new Vector3Int(3, 4, 0), alive);
     }
 
     private void Evolve()
     {
+        CurrentGen++;
+        
         var newArray2D = new int[width, height];
         
         for (var i = 0; i < width; i++)
@@ -108,4 +120,8 @@ public class Gol : MonoBehaviour
             _ => 0
         };
     }
+    
+    public void Pause() => CancelInvoke();
+
+    public void Resume() => InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
 }
