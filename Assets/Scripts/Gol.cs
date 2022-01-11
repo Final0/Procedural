@@ -1,26 +1,27 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Gol : MonoBehaviour
 {
-    [SerializeField] private float timeToEvolve;
-    
     [Header("TileBase")] 
-    [SerializeField] private TileBase alive;
-    [SerializeField] private TileBase born;
-    [SerializeField] private TileBase dead;
-    [SerializeField] private TileBase oneGen;
-    [SerializeField] private TileBase empty;
+    [SerializeField] private TileBase cell;
+    [SerializeField] private TileBase emptyCase;
     
     [SerializeField] private TMP_Text generationText;
+
+    [SerializeField] private Slider speedSlider;
     
     private Tilemap tilemap;
 
-    private readonly int[,] array2D = new int[20, 20];
+    private readonly int[,] array2D = new int[50, 50];
     
     private int width, height;
+    
+    private float timeToEvolve = 1;
+
+    private bool isPaused;
 
     private int currentGen;
     private int CurrentGen
@@ -43,7 +44,12 @@ public class Gol : MonoBehaviour
         
         InitializeCells();
         InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
+
+        speedSlider.value = timeToEvolve;
     }
+    
+
+    private void Update() => timeToEvolve = speedSlider.value;
 
     public void InitializeCells()
     {
@@ -53,7 +59,7 @@ public class Gol : MonoBehaviour
         {
             for (var j = 0; j < height; j++)
             {
-                tilemap.SetTile(new Vector3Int(i, j, 0), empty);
+                tilemap.SetTile(new Vector3Int(i, j, 0), emptyCase);
             }
         }
     }
@@ -81,10 +87,10 @@ public class Gol : MonoBehaviour
                 switch (newArray2D[i, j])
                 {
                     case 0:
-                        tilemap.SetTile(currentCell, empty);
+                        tilemap.SetTile(currentCell, emptyCase);
                         break;
                     case 1:
-                        tilemap.SetTile(currentCell, alive);
+                        tilemap.SetTile(currentCell, cell);
                         break;
                 }
             }
@@ -109,7 +115,7 @@ public class Gol : MonoBehaviour
                 
                 if (currentCell == null) continue;
                 
-                if (currentCell == alive) cellsCount++;
+                if (currentCell == cell) cellsCount++;
             }
         }
 
@@ -121,7 +127,23 @@ public class Gol : MonoBehaviour
         };
     }
     
-    public void Pause() => CancelInvoke();
+    public void Pause()
+    {
+        isPaused = true;
+        CancelInvoke();
+    }
 
-    public void Resume() => InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
+    public void Resume()
+    {
+        isPaused = false;
+        InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
+    }
+
+    public void ChangeSpeed()
+    {
+        CancelInvoke();
+        if(!isPaused) InvokeRepeating(nameof(Evolve), timeToEvolve, timeToEvolve);
+    }
+
+    public void NextGeneration() => Invoke(nameof(Evolve), 0f);
 }
