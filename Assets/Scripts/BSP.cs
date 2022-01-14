@@ -21,14 +21,14 @@ public class BSP : MonoBehaviour
     
     private void InitializeCells()
     {
-        for (var i = 0; i < mapRoom.MaxX(); i++)
+        for (var i = 0; i < mapRoom.MaxX; i++)
         {
-            for (var j = 0; j < mapRoom.MaxY(); j++)
+            for (var j = 0; j < mapRoom.MaxY; j++)
             {
                 if(i == 0) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
                 else if(j == 0) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
-                else if (i == mapRoom.MaxX() - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
-                else if (j == mapRoom.MaxY() - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
+                else if (i == mapRoom.MaxX - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
+                else if (j == mapRoom.MaxY - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
                 else tilemap.SetTile(new Vector3Int(i, j, 0), cell);
             }
         }
@@ -41,7 +41,7 @@ public class BSP : MonoBehaviour
     {
         if(nbIterations == 0) return;
 
-        var rooms = SplitRooms(room.MinX(), room.MaxX(), room.MinY(), room.MaxY());
+        var rooms = SplitRooms(room.MinX, room.MaxX, room.MinY, room.MaxY);
         
         Split(nbIterations - 1, rooms[0]);
         Split(nbIterations - 1, rooms[1]);
@@ -53,7 +53,7 @@ public class BSP : MonoBehaviour
 
         if (axe == 0)
         {
-            var cellRandomCoordinate = Random.Range(1, maxX);
+            var cellRandomCoordinate = Random.Range(minY + 1, maxY);
                     
             for (var x = minX + 1; x < maxX; x++)
             {
@@ -67,7 +67,7 @@ public class BSP : MonoBehaviour
         }
         else
         {
-            var cellRandomCoordinate = Random.Range(1, maxY);
+            var cellRandomCoordinate = Random.Range(minX + 1, maxX);
                     
             for (var y = minY + 1; y < maxY; y++)
             {
@@ -80,26 +80,23 @@ public class BSP : MonoBehaviour
             return new[] {room1, room2};
         }
     }
+
+    public void Generate()
+    {
+        tilemap.ClearAllTiles();
+        InitializeCells();
+    }
 }
 
 public class Room
 {
-    private readonly int minimumX;
-    private readonly int maximumX;
-    private readonly int minimumY;
-    private readonly int maximumY;
+    public readonly int MinX, MaxX, MinY, MaxY;
 
-    public Room(int minX, int maxX, int minY, int maxY)
+    public Room(int minimumX, int maximumX, int minimumY, int maximumY)
     {
-        minimumX = minX;
-        maximumX = maxX;
-
-        minimumY = minY;
-        maximumY = maxY;
+        MinX = minimumX;
+        MaxX = maximumX;
+        MinY = minimumY;
+        MaxY = maximumY;
     }
-
-    public int MinX() => minimumX;
-    public int MaxX() => maximumX;
-    public int MinY() => minimumY;
-    public int MaxY() => maximumY;
 }
