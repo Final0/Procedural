@@ -10,7 +10,7 @@ public class BSP : MonoBehaviour
 
     private Tilemap tilemap;
 
-    private readonly Room mapRoom = new Room(0, 50, 0, 50);
+    private readonly Room map = new Room(0, 50, 0, 50);
 
     private void Awake()
     {
@@ -21,19 +21,19 @@ public class BSP : MonoBehaviour
     
     private void InitializeCells()
     {
-        for (var i = 0; i < mapRoom.MaxX; i++)
+        for (var i = 0; i < map.MaxX; i++)
         {
-            for (var j = 0; j < mapRoom.MaxY; j++)
+            for (var j = 0; j < map.MaxY; j++)
             {
                 if(i == 0) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
                 else if(j == 0) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
-                else if (i == mapRoom.MaxX - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
-                else if (j == mapRoom.MaxY - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
+                else if (i == map.MaxX - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
+                else if (j == map.MaxY - 1) tilemap.SetTile(new Vector3Int(i, j, 0), roomCell);
                 else tilemap.SetTile(new Vector3Int(i, j, 0), cell);
             }
         }
         
-        Split(iterations, mapRoom);
+        Split(iterations, map);
     }
 
 
@@ -53,6 +53,7 @@ public class BSP : MonoBehaviour
 
         if (axe == 0)
         {
+            //var height = maxY - minY;
             var cellRandomCoordinate = Random.Range(minY + 1, maxY);
                     
             for (var x = minX + 1; x < maxX; x++)
