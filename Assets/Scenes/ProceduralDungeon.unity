@@ -532,8 +532,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell: {fileID: 11400000, guid: 2a742559e836a3a45a02da5c03f224a0, type: 2}
-  roomCell: {fileID: 11400000, guid: 5b1d4602cf6c6924a9f26c4e27ac92d5, type: 2}
+  wallCell: {fileID: 11400000, guid: 5b1d4602cf6c6924a9f26c4e27ac92d5, type: 2}
+  roomCell: {fileID: 11400000, guid: 1a250db878ccafe4aaca7f88ba97a24a, type: 2}
   iterations: 3
+  minSlice: 0.4
+  maxSlice: 0.6
 --- !u!1 &1699702783
 GameObject:
   m_ObjectHideFlags: 0
